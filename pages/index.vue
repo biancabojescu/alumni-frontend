@@ -1,21 +1,25 @@
 <template>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <main class="relative w-full bg-black">
-      <Header />
-      <HeroSection />
-      <DescriptionSection />
-      <AnniversaryTimeline />
-      <AlumniGrid />
-      <TestimonialSection />
-      <footer class="w-full">
-        <img
-          src="/assets/images/tuborg.jpeg"
-          class="object-cover w-full h-[365px]"
-          alt="Footer"
-        />
-      </footer>
-    </main>
-  </template>
+  <div class="flex flex-col gap-10 h-full w-full">
+    <HeroSection />
+    <DescriptionSection />
+    <AnniversaryTimeline />
+    <AlumniGrid :alumni="alumni" />
+    <TestimonialSection />
+  </div>
+</template>
+
+<script setup lang="ts">
+definePageMeta({
+  middleware: "guest",
+  layout: "default",
+});
+
+const alumni = [
+  {
+    image: "B",
+    name: "Bianca",
+    description: "Buna sunt Bianca!",
+    year: "2024",
+  },
+] as AlumniCard[];
+</script>
