@@ -12,7 +12,10 @@
       >
         {{ title }}
       </h3>
-      <p class="mt-2.5 text-lg md:text-2xl leading-7 text-white">
+      <p
+        class="w-full mt-2.5 text-lg md:text-2xl leading-7 text-white"
+        :class="reverse ? 'text-end items-end' : 'text-start items-start'"
+      >
         {{ description }}
       </p>
     </div>
