@@ -34,4 +34,9 @@ export const useAlumnStore = defineStore("alumnStore", {
       }
     },
   },
+  getters: {
+    getTotalPages: (state) => {
+      return state.pagination.meta?.last_page;
+    },
+  },
 });

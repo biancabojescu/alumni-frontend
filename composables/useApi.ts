@@ -1,4 +1,5 @@
 import { storeToRefs } from "pinia";
+import { useAuthStore } from "~/store/auth.store";
 
 /**
  * Asynchronous function for making API requests with optional parameters.
@@ -22,13 +23,11 @@ export default async function useApi<T, U>(
   };
 
   try {
-    const response = await $fetch<T>(request, {
+    return await $fetch<T>(request, {
       baseURL: config.public.apiUrl,
       ...opts,
       headers,
     });
-
-    return response as T;
   } catch (error: any) {
     throw error?.data?.message ?? "Something went wrong";
   }
