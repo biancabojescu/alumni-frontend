@@ -3,23 +3,49 @@
     <HeroSection />
     <DescriptionSection />
     <AnniversaryTimeline />
-    <AlumniGrid :alumni="alumni" />
+    <AlumniGrid
+      :alumni="alumni"
+      :current-page="currentPage"
+      :total-pages="getTotalPages"
+      :loading="loading"
+      @click="fetchAlumnData"
+    />
+
     <TestimonialSection />
   </div>
 </template>
 
 <script setup lang="ts">
+import { useAlumnStore } from "~/store/alumn.store";
+
 definePageMeta({
-  middleware: "guest",
+  middleware: "auth",
   layout: "default",
 });
+const alumnStore = useAlumnStore();
+const { alumnInfos, loading, getTotalPages } = storeToRefs(alumnStore);
+const currentPage = ref(1);
 
-const alumni = [
-  {
-    image: "B",
-    name: "Bianca",
-    description: "Buna sunt Bianca!",
-    year: "2024",
-  },
-] as AlumniCard[];
+const alumni = computed(() =>
+  alumnInfos.value.map((alumn) => ({
+    image: "/images/tuborg.jpeg",
+    name: alumn.nume,
+    description: alumn.activitati,
+    year: alumn.anul_alumnizarii,
+  })),
+);
+
+const fetchAlumnData = async (page: number) => {
+  const payload = {
+    per_page: 6,
+    page: page,
+  };
+
+  currentPage.value = page;
+  await alumnStore.fetchAlumnData(payload);
+};
+
+onMounted(async () => {
+  fetchAlumnData(currentPage.value);
+});
 </script>
