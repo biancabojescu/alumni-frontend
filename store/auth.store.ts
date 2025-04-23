@@ -7,6 +7,7 @@ export const useAuthStore = defineStore("authStore", {
   }),
   actions: {
     async login(credentials: LoginPayload): Promise<string | void> {
+      this.loading = true;
       try {
         const response = (await useApi(API_ENDPOINTS.request_login_link, {
           method: "POST",
@@ -15,6 +16,8 @@ export const useAuthStore = defineStore("authStore", {
         return response.success;
       } catch (error: unknown) {
         console.error("Login failed: ", error);
+      } finally {
+        this.loading = false;
       }
     },
     async loginWithMagicLinkToken(rawToken: string): Promise<void> {

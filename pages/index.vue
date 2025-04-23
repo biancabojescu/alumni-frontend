@@ -10,7 +10,6 @@
       :loading="loading"
       @click="fetchAlumnData"
     />
-
     <TestimonialSection />
   </div>
 </template>

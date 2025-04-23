@@ -8,7 +8,7 @@
       alt="Decorative image"
     />
     <p
-      class="md:pb-40 md:mt-auto md:mb-12 md:ml-20 md:text-4xl text-right text-white leading-[60px] w-fit max-md:text-center max-md:w-[90%] max-sm:text-2xl max-sm:leading-9"
+      class="md:pb-40 md:mt-auto md:mb-12 md:ml-20 md:text-4xl text-right text-white leading-[60px] w-fit max-md:text-center max-md:w-[90%] max-lg:text-2xl max-lg:leading-9"
     >
       <span>BEST Iași aniversează </span>
       <span class="text-yellow-300">24 de ani </span>

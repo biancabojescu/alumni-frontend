@@ -32,7 +32,7 @@
       </div>
     </div> -->
     <div
-      class="grid gap-4 grid-cols-[repeat(3,1fr)] max-md:grid-cols-[repeat(2,1fr)] max-sm:grid-cols-[1fr]"
+      class="grid gap-4 grid-cols-[repeat(3,1fr)] max-md:grid-cols-[repeat(2,1fr)] max-lg:grid-cols-[1fr]"
     >
       <article
         v-for="(card, index) in alumni"
