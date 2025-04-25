@@ -4,13 +4,18 @@
     <DescriptionSection />
     <AnniversaryTimeline />
     <AlumniGrid
+      v-model:selected-year="selectedYear"
       :alumni="alumni"
       :current-page="currentPage"
       :total-pages="getTotalPages"
       :loading="loading"
       @click="fetchAlumnData"
     />
-    <TestimonialSection />
+
+    <!-- <TestimonialSection /> -->
+    <div class="text-center pb-20 text-6xl text-bold text-yellow-300">
+      Acuși alumnii 2025...
+    </div>
   </div>
 </template>
 
@@ -24,6 +29,7 @@ definePageMeta({
 const alumnStore = useAlumnStore();
 const { alumnInfos, loading, getTotalPages } = storeToRefs(alumnStore);
 const currentPage = ref(1);
+const selectedYear = ref();
 
 const alumni = computed(() =>
   alumnInfos.value.map((alumn) => ({
@@ -35,16 +41,24 @@ const alumni = computed(() =>
 );
 
 const fetchAlumnData = async (page: number) => {
+  currentPage.value = page;
   const payload = {
+    anul_alumnizarii: selectedYear.value,
     per_page: 6,
-    page: page,
+    page: currentPage.value,
   };
 
-  currentPage.value = page;
   await alumnStore.fetchAlumnData(payload);
 };
 
 onMounted(async () => {
   fetchAlumnData(currentPage.value);
 });
+
+watch(selectedYear, (newYear) => {
+  if (newYear) {
+    fetchAlumnData(1);
+  }
+});
+
 </script>

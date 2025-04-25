@@ -13,7 +13,9 @@
         </div>
       </div>
       <div class="flex w-full flex-col items-center gap-10">
-        <div class="flex w-full flex-col gap-10 px-40 xl:px-80 py-6">
+        <div
+          class="flex w-full flex-col gap-10 max-sm:px-10 max-lg:px-20 px-40 xl:px-60 py-6"
+        >
           <div class="flex flex-col xl:px-60 gap-6">
             <div class="items-left flex flex-col justify-start gap-6 text-sm">
               <div

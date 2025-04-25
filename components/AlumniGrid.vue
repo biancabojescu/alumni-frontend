@@ -8,32 +8,48 @@
     >
       ALUMNII
     </h2>
-    <!-- <div class="flex md:flex-row gap-5 max-md:flex-col">
+    <div class="flex md:flex-row md:justify-between gap-5 max-md:flex-col">
       <div class="md:w-6/12 max-md:ml-0 max-md:w-full">
         <div
           class="md:mb-5 text-2xl md:text-4xl font-medium text-white uppercase"
         >
-          Anul: 2024
+          Anul: {{ year ? year : "Toti" }}
         </div>
       </div>
-      <div class="ml-5 md:w-6/12 max-md:ml-0 max-md:w-full">
-        <div
-          class="flex gap-2 md:gap-5 md:justify-end items-center mb-4 md:mb-10"
-        >
-          <div class="text-2xl md:text-4xl font-medium text-white  uppercase">
-            filter
+      <div
+        class="flex gap-2 md:gap-5 justify-end items-center mb-4 md:mb-10 justify-end"
+      >
+        <div class="max-md:ml-0 justify-end max-md:w-full relative">
+          <button
+            class="flex gap-2 md:gap-5 justify-end items-center mb-2"
+            @click="toggleDropdown"
+          >
+            <div class="text-2xl md:text-4xl font-medium text-white uppercase">
+              Filter
+            </div>
+            <NuxtIcon name="filter" filled class="text-4xl pt-2" />
+          </button>
+
+          <div
+            v-if="dropdownOpen"
+            class="absolute lg:right-0 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50"
+          >
+            <div>
+              <select
+                class="block w-full px-4 py-2 text-base text-black bg-yellow-300 font-semibold rounded-md"
+                @change="handleYearChange"
+              >
+                <option disabled selected value="">Selectează anul</option>
+                <option v-for="year in years" :key="year" :value="year">
+                  {{ year }}
+                </option>
+              </select>
+            </div>
           </div>
-          <img
-            src="/public/images/filter.png"
-            class="h-[20px] w-[20px]"
-            alt="Filter icon"
-          />
         </div>
       </div>
-    </div> -->
-    <div
-      class="grid gap-4 grid-cols-[repeat(3,1fr)] max-md:grid-cols-[repeat(2,1fr)] max-lg:grid-cols-[1fr]"
-    >
+    </div>
+    <div class="grid gap-4 grid-cols-[repeat(3,1fr)] max-lg:grid-cols-[1fr]">
       <article
         v-for="(card, index) in alumni"
         :key="index"
@@ -82,11 +98,36 @@ const props = defineProps<{
   loading: boolean;
 }>();
 
-const emit = defineEmits<{ click: [page: number] }>();
+const years = [2020, 2021, 2022, 2023, 2024];
+const dropdownOpen = ref(false);
+const selectedYear = defineModel<string | null | number>("selectedYear");
+
+const year = computed(() => {
+  return selectedYear.value ? selectedYear.value.toString() : "";
+});
+
+const emit = defineEmits<{
+  click: [page: number];
+}>();
+
+const toggleDropdown = () => {
+  dropdownOpen.value = !dropdownOpen.value;
+};
+
+const handleYearChange = (event: Event) => {
+  selectedYear.value = Number((event.target as HTMLSelectElement).value);
+  dropdownOpen.value = false;
+};
 
 const handleCurrentPage = async (page: number) => {
   emit("click", page);
+  await nextTick();
+  const alumniSection = document.getElementById("alumni");
+  if (alumniSection) {
+    alumniSection.scrollIntoView({ behavior: "smooth" });
+  }
 };
+
 const formattedDescriptions = computed(() =>
   props.alumni.map((card) => {
     if (card.description.startsWith("-")) {
@@ -97,6 +138,6 @@ const formattedDescriptions = computed(() =>
     } else {
       return card.description;
     }
-  }),
+  })
 );
 </script>

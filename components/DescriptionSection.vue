@@ -4,7 +4,7 @@
   >
     <img
       src="/public/images/tuborg.jpeg"
-      class="h-[350px] md:h-[700px] rotate-[30deg]"
+      class="h-[300px] md:h-[700px] rotate-[25deg]"
       alt="Decorative image"
     />
     <p
